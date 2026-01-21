@@ -40,14 +40,12 @@ public class Register extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        fname = new javax.swing.JTextField();
+        rpass = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        cpass = new javax.swing.JTextField();
+        remail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         BG = new javax.swing.JPanel();
 
@@ -198,35 +196,35 @@ public class Register extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("CREATE YOUR NEW ACCOUNT");
 
-        jTextField1.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField1.setText("Full Name");
-        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+        fname.setForeground(new java.awt.Color(153, 153, 153));
+        fname.setText("Full Name");
+        fname.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField1FocusGained(evt);
+                fnameFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField1FocusLost(evt);
+                fnameFocusLost(evt);
             }
         });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        fname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                fnameActionPerformed(evt);
             }
         });
 
-        jTextField2.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField2.setText("Password");
-        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+        rpass.setForeground(new java.awt.Color(153, 153, 153));
+        rpass.setText("Password");
+        rpass.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField2FocusGained(evt);
+                rpassFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField2FocusLost(evt);
+                rpassFocusLost(evt);
             }
         });
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        rpass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                rpassActionPerformed(evt);
             }
         });
 
@@ -250,56 +248,35 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        jTextField3.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField3.setText("Confirm Password");
-        jTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
+        cpass.setForeground(new java.awt.Color(153, 153, 153));
+        cpass.setText("Confirm Password");
+        cpass.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField3FocusGained(evt);
+                cpassFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField3FocusLost(evt);
+                cpassFocusLost(evt);
             }
         });
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        cpass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                cpassActionPerformed(evt);
             }
         });
 
-        jTextField4.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField4.setText("Email");
-        jTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
+        remail.setForeground(new java.awt.Color(153, 153, 153));
+        remail.setText("Email");
+        remail.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField4FocusGained(evt);
+                remailFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField4FocusLost(evt);
+                remailFocusLost(evt);
             }
         });
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        remail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
-        jTextField5.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField5.setText("Password");
-        jTextField5.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField5FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField5FocusLost(evt);
-            }
-        });
-
-        jTextField6.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField6.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField6FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField6FocusLost(evt);
+                remailActionPerformed(evt);
             }
         });
 
@@ -321,17 +298,14 @@ public class Register extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1)
-                        .addComponent(jTextField2)
-                        .addComponent(jTextField3))
+                        .addComponent(fname)
+                        .addComponent(rpass)
+                        .addComponent(cpass))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField6))
+                        .addComponent(remail, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
                         .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -353,18 +327,14 @@ public class Register extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(remail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(rpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(cpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -428,9 +398,9 @@ public class Register extends javax.swing.JFrame {
         BlockPane2.setBackground(new java.awt.Color(204, 0, 51));
     }//GEN-LAST:event_BlockPane2MouseExited
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void fnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_fnameActionPerformed
 
     private void BlockPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BlockPaneMouseClicked
         landingForm home = new landingForm();
@@ -438,32 +408,32 @@ public class Register extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BlockPaneMouseClicked
 
-    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
-        if (jTextField1.getText().equals("Email")) {
-        jTextField1.setText("");
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0)); // Change text to black
+    private void fnameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fnameFocusGained
+        if (fname.getText().equals("Full Name")) {
+        fname.setText("");
+        fname.setForeground(new java.awt.Color(0, 0, 0)); // Change text to black
     }
-    }//GEN-LAST:event_jTextField1FocusGained
+    }//GEN-LAST:event_fnameFocusGained
 
-    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
-        if (jTextField1.getText().isEmpty()) {
-        jTextField1.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
-        jTextField1.setText("Email");
+    private void fnameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fnameFocusLost
+        if (fname.getText().isEmpty()) {
+        fname.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
+        fname.setText("Full Name");
     }
-    }//GEN-LAST:event_jTextField1FocusLost
+    }//GEN-LAST:event_fnameFocusLost
 
-    private void jTextField2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusGained
-        if (jTextField2.getText().equals("Password")) {
-        jTextField2.setText("");
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_jTextField2FocusGained
+    private void rpassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_rpassFocusGained
+        if (rpass.getText().equals("Password")) {
+        rpass.setText("");
+        rpass.setForeground(new java.awt.Color(0, 0, 0));
+    }//GEN-LAST:event_rpassFocusGained
 }
     
-    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
-        if (jTextField2.getText().isEmpty()) {
-        jTextField2.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
-        jTextField2.setText("Password");
-    }//GEN-LAST:event_jTextField2FocusLost
+    private void rpassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_rpassFocusLost
+        if (rpass.getText().isEmpty()) {
+        rpass.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
+        rpass.setText("Password");
+    }//GEN-LAST:event_rpassFocusLost
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -477,71 +447,47 @@ public class Register extends javax.swing.JFrame {
         jLabel3.setBackground(new java.awt.Color(153,153,153));
     }//GEN-LAST:event_jLabel3MouseExited
 
-    private void jTextField3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusGained
-        if (jTextField3.getText().equals("Password")) {
-        jTextField4.setText("");
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_jTextField3FocusGained
+    private void cpassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cpassFocusGained
+        if (cpass.getText().equals("Confirm Password")) {
+        cpass.setText("");
+        cpass.setForeground(new java.awt.Color(0, 0, 0));
+    }//GEN-LAST:event_cpassFocusGained
     }
-    private void jTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusLost
-        if (jTextField3.getText().isEmpty()) {
-        jTextField3.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
-        jTextField3.setText("Password");
-    }//GEN-LAST:event_jTextField3FocusLost
+    private void cpassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cpassFocusLost
+        if (cpass.getText().isEmpty()) {
+        cpass.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
+        cpass.setText("Confirm Password");
+    }//GEN-LAST:event_cpassFocusLost
     }
-    private void jTextField4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusGained
-        if (jTextField4.getText().equals("Password")) {
-        jTextField4.setText("");
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_jTextField4FocusGained
+    private void remailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_remailFocusGained
+        if (remail.getText().equals("Email")) {
+        remail.setText("");
+        remail.setForeground(new java.awt.Color(0, 0, 0));
+    }//GEN-LAST:event_remailFocusGained
     }
-    private void jTextField4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusLost
-        if (jTextField4.getText().isEmpty()) {
-        jTextField4.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
-        jTextField4.setText("Password");
-    }//GEN-LAST:event_jTextField4FocusLost
+    private void remailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_remailFocusLost
+        if (remail.getText().isEmpty()) {
+        remail.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
+        remail.setText("Email");
+    }//GEN-LAST:event_remailFocusLost
     }
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void remailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_remailActionPerformed
 
-    private void jTextField5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField5FocusGained
-        if (jTextField5.getText().equals("Password")) {
-        jTextField5.setText("");
-        jTextField5.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_jTextField5FocusGained
-    }
-    private void jTextField5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField5FocusLost
-        if (jTextField5.getText().isEmpty()) {
-        jTextField5.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
-        jTextField5.setText("Password");
-    }//GEN-LAST:event_jTextField5FocusLost
-    }
-    private void jTextField6FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField6FocusGained
-        if (jTextField6.getText().equals("Password")) {
-        jTextField6.setText("");
-        jTextField6.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_jTextField6FocusGained
-    }
-    private void jTextField6FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField6FocusLost
-        if (jTextField6.getText().isEmpty()) {
-        jTextField6.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
-        jTextField6.setText("Password");
-    }//GEN-LAST:event_jTextField6FocusLost
-    }
     private void BlockPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BlockPane2MouseClicked
         Login loginWindow = new Login();
         loginWindow.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BlockPane2MouseClicked
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void rpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rpassActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_rpassActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void cpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpassActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_cpassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -586,7 +532,9 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel Home;
     private javax.swing.JLabel Login;
     private javax.swing.JLabel Register;
+    private javax.swing.JTextField cpass;
     private javax.swing.JPanel downPanel;
+    private javax.swing.JTextField fname;
     private javax.swing.JButton jButton1;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
@@ -596,12 +544,8 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField remail;
+    private javax.swing.JTextField rpass;
     private javax.swing.JPanel upPanel;
     // End of variables declaration//GEN-END:variables
 }

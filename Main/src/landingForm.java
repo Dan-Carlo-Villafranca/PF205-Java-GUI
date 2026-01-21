@@ -43,7 +43,7 @@ public class landingForm extends javax.swing.JFrame {
         Header1 = new javax.swing.JLabel();
         BG = new javax.swing.JPanel();
         Grow1 = new javax.swing.JPanel();
-        SubText4 = new javax.swing.JLabel();
+        learnMore = new javax.swing.JLabel();
         Grow = new javax.swing.JPanel();
         SubText3 = new javax.swing.JLabel();
         Connect = new javax.swing.JPanel();
@@ -214,11 +214,11 @@ public class landingForm extends javax.swing.JFrame {
             }
         });
 
-        SubText4.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 18)); // NOI18N
-        SubText4.setForeground(new java.awt.Color(255, 255, 255));
-        SubText4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        SubText4.setText("Learn More");
-        SubText4.setToolTipText("");
+        learnMore.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 18)); // NOI18N
+        learnMore.setForeground(new java.awt.Color(255, 255, 255));
+        learnMore.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        learnMore.setText("Learn More");
+        learnMore.setToolTipText("");
 
         javax.swing.GroupLayout Grow1Layout = new javax.swing.GroupLayout(Grow1);
         Grow1.setLayout(Grow1Layout);
@@ -226,12 +226,12 @@ public class landingForm extends javax.swing.JFrame {
             Grow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Grow1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(SubText4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(learnMore, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         Grow1Layout.setVerticalGroup(
             Grow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SubText4)
+            .addComponent(learnMore)
         );
 
         Grow.setBackground(new java.awt.Color(204, 0, 51));
@@ -501,11 +501,11 @@ public class landingForm extends javax.swing.JFrame {
     private javax.swing.JLabel SubText1;
     private javax.swing.JLabel SubText2;
     private javax.swing.JLabel SubText3;
-    private javax.swing.JLabel SubText4;
     private javax.swing.JPanel downPanel;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel learnMore;
     private javax.swing.JPanel upPanel;
     // End of variables declaration//GEN-END:variables
 }
