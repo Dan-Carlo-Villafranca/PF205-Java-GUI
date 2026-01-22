@@ -1,3 +1,6 @@
+
+import config.config;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +18,9 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        passwordfield.setEchoChar((char) 0); 
+        passwordfield.setText("Password");
+        passwordfield.setForeground(new java.awt.Color(153, 153, 153));
     }
 
     /**
@@ -33,10 +39,10 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        passwordfield = new javax.swing.JPasswordField();
         upPanel = new javax.swing.JPanel();
         BlockPane = new javax.swing.JPanel();
         Home = new javax.swing.JLabel();
@@ -82,17 +88,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jTextField2.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField2.setText("Password");
-        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField2FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField2FocusLost(evt);
-            }
-        });
-
         jButton1.setText("LOG IN");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,16 +110,20 @@ public class Login extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/ICON RED.png"))); // NOI18N
 
+        passwordfield.setToolTipText("");
+        passwordfield.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                passwordfieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                passwordfieldFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout welcomeBackLayout = new javax.swing.GroupLayout(welcomeBack);
         welcomeBack.setLayout(welcomeBackLayout);
         welcomeBackLayout.setHorizontalGroup(
             welcomeBackLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(welcomeBackLayout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addGroup(welcomeBackLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, welcomeBackLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(welcomeBackLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -139,6 +138,12 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addContainerGap())
+            .addGroup(welcomeBackLayout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addGroup(welcomeBackLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                    .addComponent(passwordfield))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         welcomeBackLayout.setVerticalGroup(
             welcomeBackLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,8 +159,8 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jLabel4)))
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -375,21 +380,39 @@ public class Login extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jTextField1FocusLost
 
-    private void jTextField2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusGained
-        if (jTextField2.getText().equals("Password")) {
-        jTextField2.setText("");
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_jTextField2FocusGained
-}
-    
-    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
-        if (jTextField2.getText().isEmpty()) {
-        jTextField2.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
-        jTextField2.setText("Password");
-    }//GEN-LAST:event_jTextField2FocusLost
-}
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        config conf = new config();
+    
+    // 1. Get user input from your fields
+    String identifier = jTextField1.getText(); 
+    String pass = new String(passwordfield.getPassword());
+
+    // --- IMPLEMENT HASHING HERE ---
+    String hashedPassword = config.hashPassword(pass); 
+
+    String sql = "SELECT * FROM tbl_accounts WHERE (full_name = ? OR email = ?) AND password = ?";
+
+    try {
+        // Pass the hashed password to the query
+        java.sql.ResultSet rs = conf.getData(sql, identifier, identifier, hashedPassword);
+
+        if (rs != null && rs.next()) {
+            // Check if account status is Pending
+            String status = rs.getString("status");
+            if(status.equals("Pending")) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Account is still pending approval.");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null, "Login Success!");
+                new landingForm().setVisible(true); // Go to your landing page
+                this.dispose();
+            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid Credentials!");
+        }
+    } catch (Exception e) {
+        System.out.println("Login Error: " + e.getMessage());
+    }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
@@ -411,6 +434,23 @@ public class Login extends javax.swing.JFrame {
         loginWindow.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BlockPane2MouseClicked
+
+    private void passwordfieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfieldFocusGained
+        // String.valueOf(passwordfield.getPassword()) is the safe way to check the text
+        if (String.valueOf(passwordfield.getPassword()).equals("Password")) {
+            passwordfield.setText("");
+            passwordfield.setEchoChar('•'); // Switch to dots
+            passwordfield.setForeground(new java.awt.Color(0, 0, 0)); 
+    }
+    }//GEN-LAST:event_passwordfieldFocusGained
+    
+    private void passwordfieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfieldFocusLost
+        if (passwordfield.getPassword().length == 0) {
+        passwordfield.setEchoChar((char) 0); // Remove dots so we can see the word
+        passwordfield.setText("Password");
+        passwordfield.setForeground(new java.awt.Color(153, 153, 153));
+    }
+    }//GEN-LAST:event_passwordfieldFocusLost
 
     /**
      * @param args the command line arguments
@@ -465,7 +505,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPasswordField passwordfield;
     private javax.swing.JPanel upPanel;
     private javax.swing.JPanel welcomeBack;
     // End of variables declaration//GEN-END:variables

@@ -1,3 +1,6 @@
+
+import config.config;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +18,13 @@ public class Register extends javax.swing.JFrame {
      */
     public Register() {
         initComponents();
+        passwordfield1.setEchoChar((char) 0); 
+        passwordfield1.setText("Password");
+        passwordfield1.setForeground(new java.awt.Color(153, 153, 153));
+        
+        passwordfield2.setEchoChar((char) 0); 
+        passwordfield2.setText("Confirm Password");
+        passwordfield2.setForeground(new java.awt.Color(153, 153, 153));
     }
 
     /**
@@ -41,12 +51,12 @@ public class Register extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         fname = new javax.swing.JTextField();
-        rpass = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        cpass = new javax.swing.JTextField();
         remail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        passwordfield1 = new javax.swing.JPasswordField();
+        passwordfield2 = new javax.swing.JPasswordField();
         BG = new javax.swing.JPanel();
 
         jScrollPane1.setViewportView(jEditorPane1);
@@ -212,22 +222,6 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        rpass.setForeground(new java.awt.Color(153, 153, 153));
-        rpass.setText("Password");
-        rpass.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                rpassFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                rpassFocusLost(evt);
-            }
-        });
-        rpass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rpassActionPerformed(evt);
-            }
-        });
-
         jButton1.setText("REGISTER");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,29 +232,16 @@ public class Register extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("FORGOT PASSWORD?");
+        jLabel3.setText("ALREADY HAVE AN ACCOUNT?");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel3MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jLabel3MouseExited(evt);
-            }
-        });
-
-        cpass.setForeground(new java.awt.Color(153, 153, 153));
-        cpass.setText("Confirm Password");
-        cpass.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                cpassFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cpassFocusLost(evt);
-            }
-        });
-        cpass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cpassActionPerformed(evt);
             }
         });
 
@@ -283,34 +264,60 @@ public class Register extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/ICON RED.png"))); // NOI18N
 
+        passwordfield1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                passwordfield1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                passwordfield1FocusLost(evt);
+            }
+        });
+        passwordfield1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordfield1ActionPerformed(evt);
+            }
+        });
+
+        passwordfield2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                passwordfield2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                passwordfield2FocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(143, 143, 143))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(fname)
-                        .addComponent(rpass)
-                        .addComponent(cpass))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(passwordfield1)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fname)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(remail, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                        .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(passwordfield2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(remail, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                                .addGap(20, 20, 20))))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(114, 114, 114)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,19 +334,19 @@ public class Register extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
-                        .addComponent(remail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(remail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(passwordfield2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(passwordfield1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         jLayeredPane1.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 360, 250));
@@ -422,21 +429,70 @@ public class Register extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_fnameFocusLost
 
-    private void rpassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_rpassFocusGained
-        if (rpass.getText().equals("Password")) {
-        rpass.setText("");
-        rpass.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_rpassFocusGained
-}
-    
-    private void rpassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_rpassFocusLost
-        if (rpass.getText().isEmpty()) {
-        rpass.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
-        rpass.setText("Password");
-    }//GEN-LAST:event_rpassFocusLost
-}
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // 1. Create an instance of your config class
+    config conf = new config();
+
+    // 2. Define the SQL (Assuming your table is named 'users' and columns are 'username', 'password')
+    String sql = "INSERT INTO tbl_accounts (full_name, email, password, type, status) VALUES (?, ?, ?, ?, ?)";
+
+    // 3. Get values from your text fields (Update these names to match your variables!)
+    String name = fname.getText(); 
+    String user = remail.getText(); 
+    String pass = new String(passwordfield1.getPassword());
+    String confirmPass = new String(passwordfield2.getPassword());
+
+   // 2. VALIDATION: Check for empty fields or placeholder text
+            if (name.isEmpty() || name.equals("Full Name") || 
+                user.isEmpty() || user.equals("Email") || 
+                pass.isEmpty() || pass.equals("Password") || 
+                confirmPass.isEmpty() || confirmPass.equals("Confirm Password")) {
+
+                javax.swing.JOptionPane.showMessageDialog(null, "All fields are required!", "Validation Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return; // Stop the code here
+            }
+
+    // 3. VALIDATION: Check if passwords match
+            if (!pass.equals(confirmPass)) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Passwords do not match!", "Validation Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                passwordfield1.setText(""); // Clears bastahaha
+                passwordfield2.setText(""); // Clears confirm pass
+                return; // Stop the code here
+            }
+    
+    String checkEmailSql = "SELECT * FROM tbl_accounts WHERE email = ?";
+
+        try {
+            java.sql.ResultSet rs = conf.getData(checkEmailSql, user);
+
+            if (rs != null && rs.next()) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Email is already registered!", "Duplicate Entry", javax.swing.JOptionPane.WARNING_MESSAGE);
+
+                // Optional: clear only the email field and focus it
+                remail.setText("");
+                passwordfield1.setText(""); // Clears bastahaha
+                passwordfield2.setText(""); // Clears confirm pass
+                remail.requestFocus();
+
+                // Close connection before returning
+                rs.getStatement().getConnection().close();
+                return; 
+            }
+        } catch (java.sql.SQLException e) {
+            System.out.println("Validation Error: " + e.getMessage());
+        }
+    
+    String hashedPassword = config.hashPassword(pass); 
+    // 4. Use your addRecord method to push the data
+    conf.addRecord(sql, name, user, hashedPassword, "Staff", "Pending");
+
+    javax.swing.JOptionPane.showMessageDialog(null, "Successfully Registered!");
+    
+        fname.setText("");            // Clears Full Name
+        remail.setText("");           // Clears Email
+        passwordfield1.setText(""); // Clears bastahaha
+        passwordfield2.setText("");// Clears Password
+        fname.requestFocus();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
@@ -447,18 +503,6 @@ public class Register extends javax.swing.JFrame {
         jLabel3.setBackground(new java.awt.Color(153,153,153));
     }//GEN-LAST:event_jLabel3MouseExited
 
-    private void cpassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cpassFocusGained
-        if (cpass.getText().equals("Confirm Password")) {
-        cpass.setText("");
-        cpass.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_cpassFocusGained
-    }
-    private void cpassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cpassFocusLost
-        if (cpass.getText().isEmpty()) {
-        cpass.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
-        cpass.setText("Confirm Password");
-    }//GEN-LAST:event_cpassFocusLost
-    }
     private void remailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_remailFocusGained
         if (remail.getText().equals("Email")) {
         remail.setText("");
@@ -481,13 +525,49 @@ public class Register extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BlockPane2MouseClicked
 
-    private void rpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rpassActionPerformed
+    private void passwordfield1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordfield1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rpassActionPerformed
+    }//GEN-LAST:event_passwordfield1ActionPerformed
 
-    private void cpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cpassActionPerformed
+    private void passwordfield1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfield1FocusGained
+        // String.valueOf(passwordfield.getPassword()) is the safe way to check the text
+        if (String.valueOf(passwordfield1.getPassword()).equals("Password")) {
+            passwordfield1.setText("");
+            passwordfield1.setEchoChar('•'); // Switch to dots
+            passwordfield1.setForeground(new java.awt.Color(0, 0, 0)); 
+    }
+    }//GEN-LAST:event_passwordfield1FocusGained
+
+    private void passwordfield1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfield1FocusLost
+        if (passwordfield1.getPassword().length == 0) {
+        passwordfield1.setEchoChar((char) 0); // Remove dots so we can see the word
+        passwordfield1.setText("Password");
+        passwordfield1.setForeground(new java.awt.Color(153, 153, 153));
+    }
+    }//GEN-LAST:event_passwordfield1FocusLost
+
+    private void passwordfield2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfield2FocusGained
+        // String.valueOf(passwordfield.getPassword()) is the safe way to check the text
+        if (String.valueOf(passwordfield2.getPassword()).equals("Confirm Password")) {
+            passwordfield2.setText("");
+            passwordfield2.setEchoChar('•'); // Switch to dots
+            passwordfield2.setForeground(new java.awt.Color(0, 0, 0)); 
+    }
+    }//GEN-LAST:event_passwordfield2FocusGained
+
+    private void passwordfield2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfield2FocusLost
+        if (passwordfield2.getPassword().length == 0) {
+        passwordfield2.setEchoChar((char) 0); // Remove dots so we can see the word
+        passwordfield2.setText("Confirm Password");
+        passwordfield2.setForeground(new java.awt.Color(153, 153, 153));
+    }
+    }//GEN-LAST:event_passwordfield2FocusLost
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        Login loginWindow = new Login();
+        loginWindow.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -532,7 +612,6 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel Home;
     private javax.swing.JLabel Login;
     private javax.swing.JLabel Register;
-    private javax.swing.JTextField cpass;
     private javax.swing.JPanel downPanel;
     private javax.swing.JTextField fname;
     private javax.swing.JButton jButton1;
@@ -544,8 +623,9 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPasswordField passwordfield1;
+    private javax.swing.JPasswordField passwordfield2;
     private javax.swing.JTextField remail;
-    private javax.swing.JTextField rpass;
     private javax.swing.JPanel upPanel;
     // End of variables declaration//GEN-END:variables
 }
