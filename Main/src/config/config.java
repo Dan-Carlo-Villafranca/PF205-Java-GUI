@@ -4,7 +4,9 @@ package config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import net.proteanit.sql.DbUtils;
 
 public class config {
 
@@ -85,6 +87,30 @@ public static String hashPassword(String password) {
     } catch (java.security.NoSuchAlgorithmException e) {
         System.out.println("Error hashing password: " + e.getMessage());
         return null;
+    }
+}
+
+    public static class Session {
+
+        public Session() {
+        }
+            public static String name;
+            public static String email;
+            public static String type;
+    
+    }
+
+    public void displayData(String sql, javax.swing.JTable table) {
+    try (Connection conn = connectDB(); 
+         PreparedStatement pstmt = conn.prepareStatement(sql); 
+         ResultSet rs = pstmt.executeQuery()) {
+        
+        // table.setModel is the standard way to update a JTable
+        // DbUtils comes from the rs2xml.jar library
+        table.setModel(DbUtils.resultSetToTableModel(rs));
+        
+    } catch (SQLException e) {
+        System.out.println("Error displaying data: " + e.getMessage());
     }
 }
 }
