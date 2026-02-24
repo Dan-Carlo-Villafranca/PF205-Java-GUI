@@ -392,11 +392,11 @@ public class Login extends javax.swing.JFrame {
     String hashedPassword = config.hashPassword(pass); 
 
     String sql = "SELECT * FROM tbl_accounts WHERE (full_name = ? OR email = ?) AND password = ?";
-
+    java.sql.ResultSet rs = null;
     try {
         // Pass the hashed password to the query
-        java.sql.ResultSet rs = conf.getData(sql, identifier, identifier, hashedPassword);
-
+        rs = conf.getData(sql, identifier, identifier, hashedPassword);
+            
         if (rs != null && rs.next()) {
             // Check if account status is Pending
             String userType = rs.getString("type");
@@ -405,10 +405,13 @@ public class Login extends javax.swing.JFrame {
             config.Session.name = rs.getString("full_name"); // Use your actual DB column name
             config.Session.email = rs.getString("email");
             config.Session.type = rs.getString("type");
+            config.Session.id = rs.getInt("u_id"); // This pulls '32' from the DB
+
             if(status.equals("Pending")) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Account is still pending approval.");
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null, "Login Success!");
+                System.out.println("Login Success! Saved ID: " + config.Session.id);
                 // --- DIRECTION LOGIC ---
                 if(userType.equals("Admin")) {
                     AdminDashboard ads = new AdminDashboard();
@@ -428,7 +431,17 @@ public class Login extends javax.swing.JFrame {
         }
     } catch (Exception e) {
         System.out.println("Login Error: " + e.getMessage());
-    } 
+    }finally {                                                                          //Para dili busy ang DB inig add sa account
+            // CRITICAL: Close the result set and the connection to unlock the DB
+            try {
+                if (rs != null) {
+                    rs.getStatement().getConnection().close(); // Closes the connection
+                    rs.close(); // Closes the result set
+                }
+            } catch (java.sql.SQLException e) {
+                System.out.println("Closing Error: " + e.getMessage());
+            }
+        } 
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 

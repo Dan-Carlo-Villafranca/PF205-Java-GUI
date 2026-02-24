@@ -6,6 +6,9 @@ import pages.landingForm;
 import javax.swing.*;
 import config.config;
 import Login.Login;
+import View.StockView;
+import javax.swing.table.TableModel;
+
 
 
 public class UserView extends javax.swing.JFrame {
@@ -41,9 +44,9 @@ public class UserView extends javax.swing.JFrame {
         acc_type2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        add = new javax.swing.JButton();
+        update = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
         UserButton2 = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
         UserButton = new javax.swing.JPanel();
@@ -52,6 +55,8 @@ public class UserView extends javax.swing.JFrame {
         users1 = new javax.swing.JLabel();
         HomeButton = new javax.swing.JPanel();
         home = new javax.swing.JLabel();
+        Stocks = new javax.swing.JPanel();
+        users2 = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -89,7 +94,7 @@ public class UserView extends javax.swing.JFrame {
         upPanel.add(BlockPane3);
         BlockPane3.setBounds(330, 0, 70, 30);
 
-        jLayeredPane1.add(upPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 30));
+        jLayeredPane1.add(upPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 30));
 
         downPanel.setBackground(new java.awt.Color(204, 0, 51));
 
@@ -97,14 +102,14 @@ public class UserView extends javax.swing.JFrame {
         downPanel.setLayout(downPanelLayout);
         downPanelLayout.setHorizontalGroup(
             downPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGap(0, 930, Short.MAX_VALUE)
         );
         downPanelLayout.setVerticalGroup(
             downPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        jLayeredPane1.add(downPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 600, 30));
+        jLayeredPane1.add(downPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 930, 30));
 
         BG.setBackground(new java.awt.Color(153, 0, 51));
 
@@ -133,28 +138,33 @@ public class UserView extends javax.swing.JFrame {
             }
         ));
         jScrollPane2.setViewportView(userTable);
+        if (userTable.getColumnModel().getColumnCount() > 0) {
+            userTable.getColumnModel().getColumn(0).setResizable(false);
+            userTable.getColumnModel().getColumn(1).setResizable(false);
+            userTable.getColumnModel().getColumn(2).setResizable(false);
+        }
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        add.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        add.setText("Add");
+        add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jButton2.setText("Update");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        update.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                updateActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jButton3.setText("Delete");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        delete.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                deleteActionPerformed(evt);
             }
         });
 
@@ -165,15 +175,15 @@ public class UserView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(add)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2)
+                                .addComponent(update)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3))
+                                .addComponent(delete))
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,24 +199,21 @@ public class UserView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(acc_name1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(acc_type2))
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                        .addGap(5, 5, 5)
+                        .addComponent(acc_name1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(acc_type2))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3))
-                        .addGap(3, 3, 3)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(157, 157, 157))
+                            .addComponent(add)
+                            .addComponent(update)
+                            .addComponent(delete))))
+                .addGap(3, 3, 3)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout BGLayout = new javax.swing.GroupLayout(BG);
@@ -218,12 +225,12 @@ public class UserView extends javax.swing.JFrame {
         BGLayout.setVerticalGroup(
             BGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BGLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jLayeredPane1.add(BG, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 540, 290));
+        jLayeredPane1.add(BG, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 870, 440));
 
         UserButton2.setBackground(new java.awt.Color(204, 0, 51));
         UserButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -260,7 +267,7 @@ public class UserView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLayeredPane1.add(UserButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 60, 30));
+        jLayeredPane1.add(UserButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 60, 30));
 
         UserButton.setBackground(new java.awt.Color(204, 0, 51));
         UserButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -358,6 +365,40 @@ public class UserView extends javax.swing.JFrame {
 
         jLayeredPane1.add(HomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 60, 30));
 
+        Stocks.setBackground(new java.awt.Color(204, 0, 51));
+        Stocks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                StocksMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                StocksMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                StocksMouseExited(evt);
+            }
+        });
+
+        users2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        users2.setForeground(new java.awt.Color(240, 240, 240));
+        users2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        users2.setText("Stocks");
+
+        javax.swing.GroupLayout StocksLayout = new javax.swing.GroupLayout(Stocks);
+        Stocks.setLayout(StocksLayout);
+        StocksLayout.setHorizontalGroup(
+            StocksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(StocksLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(users2, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        StocksLayout.setVerticalGroup(
+            StocksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(users2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        );
+
+        jLayeredPane1.add(Stocks, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 60, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -431,17 +472,92 @@ public class UserView extends javax.swing.JFrame {
         UserButton2.setBackground(new java.awt.Color(204,0,51));
     }//GEN-LAST:event_UserButton2MouseExited
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        addUser au = new addUser();
+        au.action = "Add";
+        au.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_addActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        // 1. Check if a row is actually selected
+        int rowIndex = userTable.getSelectedRow();
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        if (rowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "Please select an account to update!");
+            return;
+        }
+
+        // 2. Access the table model to get data
+        javax.swing.table.TableModel model = userTable.getModel();
+
+        // 3. Create the instance of the addUser form
+        addUser au = new addUser(); 
+
+        // 4. Map the columns to your addUser fields
+        // Note: The numbers (0, 1, 2, 3) must match the order in your SQL SELECT:
+        // u_id(0), full_name(1), email(2), type(3), status(4)
+        au.userID = Integer.parseInt(model.getValueAt(rowIndex, 0).toString());
+        au.fname.setText(model.getValueAt(rowIndex, 1).toString());
+        au.remail.setText(model.getValueAt(rowIndex, 2).toString());
+        au.Type.setSelectedItem(model.getValueAt(rowIndex, 3).toString());
+        au.Status.setSelectedItem(model.getValueAt(rowIndex, 4).toString());
+
+        // 5. Set the mode to Update and change button text for clarity
+        au.action = "Update";
+        au.jButton1.setText("UPDATE"); // Assuming jButton1 is your Save/Add button
+
+        // 6. Show the form and close UserView
+        au.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_updateActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        int rowIndex = userTable.getSelectedRow();
+
+            if (rowIndex < 0) {
+                JOptionPane.showMessageDialog(null, "Please select a user to delete!");
+                return;
+            }
+
+            // 1. Get the ID of the selected user
+            TableModel model = userTable.getModel();
+            Object id = model.getValueAt(rowIndex, 0);
+            String name = model.getValueAt(rowIndex, 1).toString();
+
+            // 2. Ask for confirmation
+            int confirm = JOptionPane.showConfirmDialog(null, 
+                    "Are you sure you want to delete " + name + "?", 
+                    "Delete Warning", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                config con = new config();
+                // 3. The SQL Delete Query
+                String sql = "DELETE FROM tbl_accounts WHERE u_id = ?";
+
+                // 4. Execute (using your existing addRecord or a similar execute method)
+                con.addRecord(sql, id.toString()); 
+
+                // 5. Refresh the table
+                getUsersData(); 
+                JOptionPane.showMessageDialog(null, "User deleted successfully!");
+            }
+    }//GEN-LAST:event_deleteActionPerformed
+
+    private void StocksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StocksMouseClicked
+        StockView sview = new StockView();
+        
+        sview.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_StocksMouseClicked
+
+    private void StocksMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StocksMouseEntered
+        Stocks.setBackground(new java.awt.Color(255, 102, 102));
+    }//GEN-LAST:event_StocksMouseEntered
+
+    private void StocksMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StocksMouseExited
+        Stocks.setBackground(new java.awt.Color(204,0,51));
+    }//GEN-LAST:event_StocksMouseExited
     
     /**
      * @param args the command line arguments
@@ -482,16 +598,16 @@ public class UserView extends javax.swing.JFrame {
     private javax.swing.JPanel BG;
     private javax.swing.JPanel BlockPane3;
     private javax.swing.JPanel HomeButton;
+    private javax.swing.JPanel Stocks;
     private javax.swing.JPanel UserButton;
     private javax.swing.JPanel UserButton1;
     private javax.swing.JPanel UserButton2;
     private javax.swing.JLabel acc_name1;
     private javax.swing.JLabel acc_type2;
+    private javax.swing.JButton add;
+    private javax.swing.JButton delete;
     private javax.swing.JPanel downPanel;
     private javax.swing.JLabel home;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
@@ -502,7 +618,9 @@ public class UserView extends javax.swing.JFrame {
     private javax.swing.JLabel logout;
     private javax.swing.JLabel reports;
     private javax.swing.JPanel upPanel;
+    private javax.swing.JButton update;
     private javax.swing.JTable userTable;
     private javax.swing.JLabel users1;
+    private javax.swing.JLabel users2;
     // End of variables declaration//GEN-END:variables
 }

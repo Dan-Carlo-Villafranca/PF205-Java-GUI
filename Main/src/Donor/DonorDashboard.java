@@ -7,17 +7,43 @@ import javax.swing.*;
 import config.config;
 import Login.Login;
 import Users.UserView;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import net.proteanit.sql.DbUtils;
 
 
 public class DonorDashboard extends javax.swing.JFrame {
 
     public DonorDashboard() {
-        initComponents();
-        acc_name1.setText(config.Session.name);
-        acc_email.setText(config.Session.email);
-        acc_type2.setText(config.Session.type);
-    }
+        // 1. Check security BEFORE anything else
+        if (config.Session.id == 0) {
+            JOptionPane.showMessageDialog(null, "Access Denied! Please Login.");
+            new Login().setVisible(true);
+            this.dispose();
+            return; // Stop here! Don't build the rest of the page.
+        }
 
+        // 2. Build the UI
+        initComponents();
+        
+        // 3. Set User Details
+        acc_name1.setText(config.Session.name);
+        acc_email.setText(config.Session.email); // Make sure 'email' exists in Session!
+        acc_type2.setText(config.Session.type);
+        
+        // 4. LOAD THE DATA (You forgot to call the method!)
+        getMyDonationHistory();
+    }
+    
+        void getMyDonationHistory() {
+                config con = new config();
+                // Correct SQL using the session ID to filter the table
+                String sql = "SELECT d_date, blood_type, quantity, status FROM tbl_donations WHERE u_id = '" + config.Session.id + "'";
+                con.displayData(sql, donorHistoryTable);
+            }
+        
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -35,6 +61,10 @@ public class DonorDashboard extends javax.swing.JFrame {
         acc_name1 = new javax.swing.JLabel();
         acc_email = new javax.swing.JLabel();
         acc_type2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        donorHistoryTable = new javax.swing.JTable();
+        Donate = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         UserButton2 = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
         UserButton = new javax.swing.JPanel();
@@ -78,7 +108,7 @@ public class DonorDashboard extends javax.swing.JFrame {
         upPanel.add(BlockPane3);
         BlockPane3.setBounds(330, 0, 70, 30);
 
-        jLayeredPane1.add(upPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 30));
+        jLayeredPane1.add(upPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 30));
 
         downPanel.setBackground(new java.awt.Color(204, 0, 51));
 
@@ -86,14 +116,14 @@ public class DonorDashboard extends javax.swing.JFrame {
         downPanel.setLayout(downPanelLayout);
         downPanelLayout.setHorizontalGroup(
             downPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGap(0, 930, Short.MAX_VALUE)
         );
         downPanelLayout.setVerticalGroup(
             downPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        jLayeredPane1.add(downPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 600, 30));
+        jLayeredPane1.add(downPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 930, 30));
 
         BG.setBackground(new java.awt.Color(153, 0, 51));
 
@@ -119,55 +149,122 @@ public class DonorDashboard extends javax.swing.JFrame {
         acc_type2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         acc_type2.setText("jLabel1");
 
+        donorHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Date", "Blood Type", "Quantity", "Status"
+            }
+        ));
+        jScrollPane2.setViewportView(donorHistoryTable);
+
+        Donate.setBackground(new java.awt.Color(204, 0, 51));
+        Donate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DonateMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                DonateMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                DonateMouseExited(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Donate Now!");
+
+        javax.swing.GroupLayout DonateLayout = new javax.swing.GroupLayout(Donate);
+        Donate.setLayout(DonateLayout);
+        DonateLayout.setHorizontalGroup(
+            DonateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DonateLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
+        );
+        DonateLayout.setVerticalGroup(
+            DonateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DonateLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(acc_name1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(acc_email, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(acc_type2, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 20, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(acc_name1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Donate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(acc_email, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(acc_type2, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
+                                .addGap(60, 60, 60))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(acc_name1)
-                .addGap(6, 6, 6)
-                .addComponent(acc_email)
-                .addGap(6, 6, 6)
-                .addComponent(acc_type2)
-                .addGap(16, 16, 16))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(acc_name1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(acc_email)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(acc_type2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Donate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(80, 80, 80))
         );
 
         javax.swing.GroupLayout BGLayout = new javax.swing.GroupLayout(BG);
         BG.setLayout(BGLayout);
         BGLayout.setHorizontalGroup(
             BGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BGLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         BGLayout.setVerticalGroup(
             BGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BGLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jLayeredPane1.add(BG, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 540, 290));
+        jLayeredPane1.add(BG, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 870, 440));
 
         UserButton2.setBackground(new java.awt.Color(204, 0, 51));
         UserButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -204,7 +301,7 @@ public class DonorDashboard extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLayeredPane1.add(UserButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 60, 30));
+        jLayeredPane1.add(UserButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 60, 30));
 
         UserButton.setBackground(new java.awt.Color(204, 0, 51));
         UserButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -343,6 +440,20 @@ public class DonorDashboard extends javax.swing.JFrame {
     private void UserButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton2MouseExited
         UserButton2.setBackground(new java.awt.Color(204,0,51));
     }//GEN-LAST:event_UserButton2MouseExited
+
+    private void DonateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DonateMouseEntered
+        Donate.setBackground(new java.awt.Color(255, 102, 102));
+    }//GEN-LAST:event_DonateMouseEntered
+
+    private void DonateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DonateMouseExited
+        Donate.setBackground(new java.awt.Color(204,0,51));
+    }//GEN-LAST:event_DonateMouseExited
+
+    private void DonateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DonateMouseClicked
+        addTransac at = new addTransac();
+        at.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_DonateMouseClicked
     
     /**
      * @param args the command line arguments
@@ -374,28 +485,35 @@ public class DonorDashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                if (config.Session.id == 0){
+                    new Login().setVisible(true);
+                } else {
                 new DonorDashboard().setVisible(true);
             }
-        });
-    }
-
+        }
+    });
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BG;
     private javax.swing.JPanel BlockPane3;
+    private javax.swing.JPanel Donate;
     private javax.swing.JPanel HomeButton;
     private javax.swing.JPanel UserButton;
     private javax.swing.JPanel UserButton2;
     private javax.swing.JLabel acc_email;
     private javax.swing.JLabel acc_name1;
     private javax.swing.JLabel acc_type2;
+    private javax.swing.JTable donorHistoryTable;
     private javax.swing.JPanel downPanel;
     private javax.swing.JLabel home;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel logout;
     private javax.swing.JLabel reports;
     private javax.swing.JPanel upPanel;

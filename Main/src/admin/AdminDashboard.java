@@ -6,6 +6,7 @@ import javax.swing.*;
 import config.config;
 import Login.Login;
 import Users.UserView;
+import View.StockView;
 
 
 public class AdminDashboard extends javax.swing.JFrame {
@@ -15,6 +16,16 @@ public class AdminDashboard extends javax.swing.JFrame {
         acc_name1.setText(config.Session.name);
         acc_type2.setText(config.Session.type);
         acc_email.setText(config.Session.email);
+        
+//        if (config.Session.id == 0){
+//            JOptionPane.showMessageDialog(null, "Access Denied!");
+//        } else {
+//            AdminDashboard ad = new AdminDashboard();
+//            ad.setVisible(true);
+//            this.dispose();
+//            return;
+//        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -42,6 +53,8 @@ public class AdminDashboard extends javax.swing.JFrame {
         users1 = new javax.swing.JLabel();
         HomeButton = new javax.swing.JPanel();
         home = new javax.swing.JLabel();
+        Stocks = new javax.swing.JPanel();
+        reports1 = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -79,7 +92,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         upPanel.add(BlockPane3);
         BlockPane3.setBounds(330, 0, 70, 30);
 
-        jLayeredPane1.add(upPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 30));
+        jLayeredPane1.add(upPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 30));
 
         downPanel.setBackground(new java.awt.Color(204, 0, 51));
 
@@ -87,14 +100,14 @@ public class AdminDashboard extends javax.swing.JFrame {
         downPanel.setLayout(downPanelLayout);
         downPanelLayout.setHorizontalGroup(
             downPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGap(0, 930, Short.MAX_VALUE)
         );
         downPanelLayout.setVerticalGroup(
             downPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        jLayeredPane1.add(downPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 600, 30));
+        jLayeredPane1.add(downPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 930, 30));
 
         BG.setBackground(new java.awt.Color(153, 0, 51));
 
@@ -107,24 +120,24 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Profile Blank red.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, 530, 148));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, 150, 150));
 
         acc_name1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         acc_name1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         acc_name1.setText("jLabel2");
-        jPanel1.add(acc_name1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 530, -1));
+        jPanel1.add(acc_name1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 160, 90, -1));
 
         acc_type2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         acc_type2.setForeground(new java.awt.Color(204, 0, 0));
         acc_type2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         acc_type2.setText("jLabel1");
-        jPanel1.add(acc_type2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 238, 530, -1));
+        jPanel1.add(acc_type2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 200, 70, -1));
 
         acc_email.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         acc_email.setForeground(new java.awt.Color(153, 153, 153));
         acc_email.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         acc_email.setText("jLabel2");
-        jPanel1.add(acc_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 221, 530, -1));
+        jPanel1.add(acc_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 180, 50, 10));
 
         javax.swing.GroupLayout BGLayout = new javax.swing.GroupLayout(BG);
         BG.setLayout(BGLayout);
@@ -136,11 +149,11 @@ public class AdminDashboard extends javax.swing.JFrame {
             BGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BGLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jLayeredPane1.add(BG, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 540, 290));
+        jLayeredPane1.add(BG, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 870, 440));
 
         UserButton2.setBackground(new java.awt.Color(204, 0, 51));
         UserButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -177,7 +190,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLayeredPane1.add(UserButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 60, 30));
+        jLayeredPane1.add(UserButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 60, 30));
 
         UserButton.setBackground(new java.awt.Color(204, 0, 51));
         UserButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -272,6 +285,40 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLayeredPane1.add(HomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 60, 30));
 
+        Stocks.setBackground(new java.awt.Color(204, 0, 51));
+        Stocks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                StocksMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                StocksMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                StocksMouseExited(evt);
+            }
+        });
+
+        reports1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        reports1.setForeground(new java.awt.Color(240, 240, 240));
+        reports1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        reports1.setText("Stocks");
+
+        javax.swing.GroupLayout StocksLayout = new javax.swing.GroupLayout(Stocks);
+        Stocks.setLayout(StocksLayout);
+        StocksLayout.setHorizontalGroup(
+            StocksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(StocksLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(reports1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        StocksLayout.setVerticalGroup(
+            StocksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(reports1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        );
+
+        jLayeredPane1.add(Stocks, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 60, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -345,6 +392,21 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void UserButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton2MouseExited
         UserButton2.setBackground(new java.awt.Color(204,0,51));
     }//GEN-LAST:event_UserButton2MouseExited
+
+    private void StocksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StocksMouseClicked
+        StockView sview = new StockView();
+        
+        sview.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_StocksMouseClicked
+
+    private void StocksMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StocksMouseEntered
+        Stocks.setBackground(new java.awt.Color(255, 102, 102));
+    }//GEN-LAST:event_StocksMouseEntered
+
+    private void StocksMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StocksMouseExited
+        Stocks.setBackground(new java.awt.Color(204,0,51));
+    }//GEN-LAST:event_StocksMouseExited
     
     /**
      * @param args the command line arguments
@@ -373,10 +435,14 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the form */     // THIS ALSO IMPLEMENTS THE REQUIRED LOG IN
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                if (config.Session.id == 0){
+                    new Login().setVisible(true);
+                } else {
                 new AdminDashboard().setVisible(true);
+            }
             }
         });
     }
@@ -385,6 +451,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel BG;
     private javax.swing.JPanel BlockPane3;
     private javax.swing.JPanel HomeButton;
+    private javax.swing.JPanel Stocks;
     private javax.swing.JPanel UserButton;
     private javax.swing.JPanel UserButton1;
     private javax.swing.JPanel UserButton2;
@@ -401,6 +468,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logout;
     private javax.swing.JLabel reports;
+    private javax.swing.JLabel reports1;
     private javax.swing.JPanel upPanel;
     private javax.swing.JLabel users1;
     // End of variables declaration//GEN-END:variables

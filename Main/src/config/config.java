@@ -94,6 +94,7 @@ public static String hashPassword(String password) {
 
         public Session() {
         }
+            public static int id;
             public static String name;
             public static String email;
             public static String type;
@@ -108,6 +109,10 @@ public static String hashPassword(String password) {
         // table.setModel is the standard way to update a JTable
         // DbUtils comes from the rs2xml.jar library
         table.setModel(DbUtils.resultSetToTableModel(rs));
+        
+//        rs.close();
+//        pstmt.close();
+//        conn.close();
         
     } catch (SQLException e) {
         System.out.println("Error displaying data: " + e.getMessage());
