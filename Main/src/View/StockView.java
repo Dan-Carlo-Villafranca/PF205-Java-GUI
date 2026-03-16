@@ -37,7 +37,6 @@ public class StockView extends javax.swing.JFrame {
         jEditorPane1 = new javax.swing.JEditorPane();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         upPanel = new javax.swing.JPanel();
-        BlockPane3 = new javax.swing.JPanel();
         downPanel = new javax.swing.JPanel();
         BG = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -72,31 +71,6 @@ public class StockView extends javax.swing.JFrame {
         upPanel.setBackground(new java.awt.Color(204, 0, 51));
         upPanel.setForeground(new java.awt.Color(255, 255, 255));
         upPanel.setLayout(null);
-
-        BlockPane3.setBackground(new java.awt.Color(204, 0, 51));
-        BlockPane3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                BlockPane3MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                BlockPane3MouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout BlockPane3Layout = new javax.swing.GroupLayout(BlockPane3);
-        BlockPane3.setLayout(BlockPane3Layout);
-        BlockPane3Layout.setHorizontalGroup(
-            BlockPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
-        );
-        BlockPane3Layout.setVerticalGroup(
-            BlockPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        upPanel.add(BlockPane3);
-        BlockPane3.setBounds(330, 0, 70, 30);
-
         jLayeredPane1.add(upPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 30));
 
         downPanel.setBackground(new java.awt.Color(204, 0, 51));
@@ -139,7 +113,15 @@ public class StockView extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(stockTable);
 
         add.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
@@ -418,14 +400,6 @@ public class StockView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BlockPane3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BlockPane3MouseEntered
-        BlockPane3.setBackground(new java.awt.Color(255, 102, 102));
-    }//GEN-LAST:event_BlockPane3MouseEntered
-
-    private void BlockPane3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BlockPane3MouseExited
-        BlockPane3.setBackground(new java.awt.Color(204, 0, 51));
-    }//GEN-LAST:event_BlockPane3MouseExited
-
     private void HomeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeButtonMouseClicked
         AdminDashboard ads = new AdminDashboard();
         ads.setVisible(true);
@@ -506,6 +480,11 @@ public class StockView extends javax.swing.JFrame {
         // u_id(0), full_name(1), email(2), type(3), status(4)
         as.userID = Integer.parseInt(model.getValueAt(rowIndex, 0).toString());
 
+        // Carry the Blood Type name over to the next window
+        as.btype.setText(model.getValueAt(rowIndex, 1).toString());
+
+        // Carry the current Quantity over so they can just edit the number
+        as.quantity.setText(model.getValueAt(rowIndex, 2).toString());
         // 5. Set the mode to Update and change button text for clarity
         as.action = "Update";
         as.Save.setText("UPDATE"); // Assuming jButton1 is your Save/Add button
@@ -608,7 +587,6 @@ public class StockView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BG;
-    private javax.swing.JPanel BlockPane3;
     private javax.swing.JPanel HomeButton;
     private javax.swing.JPanel Stocks;
     private javax.swing.JPanel UserButton1;

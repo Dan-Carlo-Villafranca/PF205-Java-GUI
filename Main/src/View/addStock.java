@@ -51,12 +51,12 @@ public class addStock extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 24)); // NOI18N
-        jLabel1.setText("Add User");
+        jLabel1.setText("Stock Inventory");
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText("Create the Account");
+        jLabel2.setText("Add / Edit Stock");
 
         btype.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -251,8 +251,8 @@ public class addStock extends javax.swing.JFrame {
     }
 
     // 1. Get the text from your specific fields
-    String bloodtype = btype.getText();
-    String quan = quantity.getText();
+    String bloodtype = btype.getText().trim();
+    String quan = quantity.getText().trim();
 
     // 2. Simple Validation: Check if empty or still showing placeholder text
     if(bloodtype.isEmpty() || quan.isEmpty() || bloodtype.equals("Blood Type") || quan.equals("Quantity")) {
@@ -260,6 +260,12 @@ public class addStock extends javax.swing.JFrame {
     } else {
         // 3. LOGIC SWITCH: ADD vs UPDATE
         if (action.equals("Add")) {
+            
+            String checkSql = "SELECT COUNT(*) FROM tbl_blood WHERE LOWER(blood_type) = LOWER(?)";
+            if (con.getSingleValue(checkSql, bloodtype) > 0) {
+                JOptionPane.showMessageDialog(null, "Error: Blood Type '" + bloodtype + "' already exists! Please use Update instead.");
+                return; // Stop the code here
+            }
             // SQL for adding a new blood type record
             String sql = "INSERT INTO tbl_blood (blood_type, quantity) VALUES (?, ?)";
             con.addRecord(sql, bloodtype, quan);
@@ -269,7 +275,7 @@ public class addStock extends javax.swing.JFrame {
 
         } else if (action.equals("Update")) {
             // SQL for updating existing stock quantity based on s_id
-            String sql = "UPDATE tbl_blood SET blood_type = ?, quantity = ? WHERE s_id = ?";
+            String sql = "UPDATE tbl_blood SET blood_type = ?, quantity = ? WHERE b_id = ?";
             
             // userID here should refer to the 's_id' passed from your StockView table
             con.addRecord(sql, bloodtype, quan, userID);

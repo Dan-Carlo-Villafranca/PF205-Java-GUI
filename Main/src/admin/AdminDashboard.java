@@ -6,6 +6,7 @@ import javax.swing.*;
 import config.config;
 import Login.Login;
 import Users.UserView;
+import View.RequestView;
 import View.StockView;
 
 
@@ -26,8 +27,29 @@ public class AdminDashboard extends javax.swing.JFrame {
 //            return;
 //        }
 
-    }
+        updateRequestValue();
 
+    }
+public void updateRequestValue() {
+    config con = new config();
+    // This counts every single request in your table
+    String sql = "SELECT COUNT(*) FROM tbl_requests";
+
+    try (java.sql.Connection conn = con.connectDB();
+         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql);
+         java.sql.ResultSet rs = pstmt.executeQuery()) {
+
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            
+            // This links the database number to your specific label
+            request_value.setText(String.valueOf(count)); 
+        }
+
+    } catch (java.sql.SQLException e) {
+        System.out.println("Error updating request_value: " + e.getMessage());
+    }
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -45,6 +67,15 @@ public class AdminDashboard extends javax.swing.JFrame {
         acc_name1 = new javax.swing.JLabel();
         acc_type2 = new javax.swing.JLabel();
         acc_email = new javax.swing.JLabel();
+        total_stock = new javax.swing.JPanel();
+        stocks_txt = new javax.swing.JLabel();
+        stock_value = new javax.swing.JLabel();
+        blood_request = new javax.swing.JPanel();
+        requests_txt = new javax.swing.JLabel();
+        request_value = new javax.swing.JLabel();
+        donations = new javax.swing.JPanel();
+        Donations_txt = new javax.swing.JLabel();
+        donations_value = new javax.swing.JLabel();
         UserButton2 = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
         UserButton = new javax.swing.JPanel();
@@ -138,6 +169,138 @@ public class AdminDashboard extends javax.swing.JFrame {
         acc_email.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         acc_email.setText("jLabel2");
         jPanel1.add(acc_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 180, 50, 10));
+
+        total_stock.setBackground(new java.awt.Color(255, 51, 50));
+        total_stock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                total_stockMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                total_stockMouseExited(evt);
+            }
+        });
+
+        stocks_txt.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        stocks_txt.setForeground(new java.awt.Color(255, 255, 255));
+        stocks_txt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stocks_txt.setText("Stocks");
+
+        stock_value.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        stock_value.setForeground(new java.awt.Color(255, 255, 255));
+        stock_value.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stock_value.setText("Click to view more");
+
+        javax.swing.GroupLayout total_stockLayout = new javax.swing.GroupLayout(total_stock);
+        total_stock.setLayout(total_stockLayout);
+        total_stockLayout.setHorizontalGroup(
+            total_stockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(total_stockLayout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addComponent(stocks_txt)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, total_stockLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(stock_value, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        total_stockLayout.setVerticalGroup(
+            total_stockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(total_stockLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(stocks_txt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(stock_value)
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(total_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 190, 100));
+
+        blood_request.setBackground(new java.awt.Color(255, 51, 51));
+        blood_request.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                blood_requestMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                blood_requestMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                blood_requestMouseExited(evt);
+            }
+        });
+
+        requests_txt.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        requests_txt.setForeground(new java.awt.Color(255, 255, 255));
+        requests_txt.setText("Requests");
+
+        request_value.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        request_value.setForeground(new java.awt.Color(255, 255, 255));
+        request_value.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        request_value.setText("jLabel6");
+
+        javax.swing.GroupLayout blood_requestLayout = new javax.swing.GroupLayout(blood_request);
+        blood_request.setLayout(blood_requestLayout);
+        blood_requestLayout.setHorizontalGroup(
+            blood_requestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(blood_requestLayout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addGroup(blood_requestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(requests_txt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(request_value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
+        );
+        blood_requestLayout.setVerticalGroup(
+            blood_requestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(blood_requestLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(requests_txt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(request_value)
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(blood_request, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 200, 100));
+
+        donations.setBackground(new java.awt.Color(255, 51, 51));
+        donations.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                donationsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                donationsMouseExited(evt);
+            }
+        });
+
+        Donations_txt.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Donations_txt.setForeground(new java.awt.Color(255, 255, 255));
+        Donations_txt.setText("Donations");
+
+        donations_value.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        donations_value.setForeground(new java.awt.Color(255, 255, 255));
+        donations_value.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        donations_value.setText("jLabel6");
+
+        javax.swing.GroupLayout donationsLayout = new javax.swing.GroupLayout(donations);
+        donations.setLayout(donationsLayout);
+        donationsLayout.setHorizontalGroup(
+            donationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(donationsLayout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addGroup(donationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(donations_value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Donations_txt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
+        );
+        donationsLayout.setVerticalGroup(
+            donationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(donationsLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(Donations_txt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(donations_value)
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(donations, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, -1, 100));
 
         javax.swing.GroupLayout BGLayout = new javax.swing.GroupLayout(BG);
         BG.setLayout(BGLayout);
@@ -407,6 +570,36 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void StocksMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StocksMouseExited
         Stocks.setBackground(new java.awt.Color(204,0,51));
     }//GEN-LAST:event_StocksMouseExited
+
+    private void total_stockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_total_stockMouseEntered
+        total_stock.setBackground(new java.awt.Color(255,102,102));
+    }//GEN-LAST:event_total_stockMouseEntered
+
+    private void total_stockMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_total_stockMouseExited
+        total_stock.setBackground(new java.awt.Color(255,51,51));
+    }//GEN-LAST:event_total_stockMouseExited
+
+    private void blood_requestMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blood_requestMouseEntered
+        blood_request.setBackground(new java.awt.Color(255,102,102));
+    }//GEN-LAST:event_blood_requestMouseEntered
+
+    private void blood_requestMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blood_requestMouseExited
+        blood_request.setBackground(new java.awt.Color(255,51,51));
+    }//GEN-LAST:event_blood_requestMouseExited
+
+    private void donationsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_donationsMouseEntered
+        donations.setBackground(new java.awt.Color(255,102,102));
+    }//GEN-LAST:event_donationsMouseEntered
+
+    private void donationsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_donationsMouseExited
+        donations.setBackground(new java.awt.Color(255,51,51));
+    }//GEN-LAST:event_donationsMouseExited
+
+    private void blood_requestMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blood_requestMouseClicked
+        RequestView rview = new RequestView();
+        rview.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_blood_requestMouseClicked
     
     /**
      * @param args the command line arguments
@@ -450,6 +643,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BG;
     private javax.swing.JPanel BlockPane3;
+    private javax.swing.JLabel Donations_txt;
     private javax.swing.JPanel HomeButton;
     private javax.swing.JPanel Stocks;
     private javax.swing.JPanel UserButton;
@@ -458,6 +652,9 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel acc_email;
     private javax.swing.JLabel acc_name1;
     private javax.swing.JLabel acc_type2;
+    private javax.swing.JPanel blood_request;
+    private javax.swing.JPanel donations;
+    private javax.swing.JLabel donations_value;
     private javax.swing.JPanel downPanel;
     private javax.swing.JLabel home;
     private javax.swing.JEditorPane jEditorPane1;
@@ -469,6 +666,11 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel logout;
     private javax.swing.JLabel reports;
     private javax.swing.JLabel reports1;
+    private javax.swing.JLabel request_value;
+    private javax.swing.JLabel requests_txt;
+    private javax.swing.JLabel stock_value;
+    private javax.swing.JLabel stocks_txt;
+    private javax.swing.JPanel total_stock;
     private javax.swing.JPanel upPanel;
     private javax.swing.JLabel users1;
     // End of variables declaration//GEN-END:variables

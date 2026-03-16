@@ -118,4 +118,24 @@ public static String hashPassword(String password) {
         System.out.println("Error displaying data: " + e.getMessage());
     }
 }
+    
+    public int getSingleValue(String sql, Object... values) {
+    int count = 0;
+    try (Connection conn = this.connectDB();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        // Loop to set any '?' in your SQL
+        for (int i = 0; i < values.length; i++) {
+            pstmt.setObject(i + 1, values[i]);
+        }
+        
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            count = rs.getInt(1);
+        }
+    } catch (SQLException e) {
+        System.out.println("Error fetching value: " + e.getMessage());
+    }
+    return count;
+}
 }

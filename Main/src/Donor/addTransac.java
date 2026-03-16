@@ -119,7 +119,7 @@ public class addTransac extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Quantity");
+        jLabel3.setText("Quantity (bags)");
 
         jLabel5.setText("Blood Type");
 
@@ -138,7 +138,7 @@ public class addTransac extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Date");
+        jLabel6.setText("Date (yyyy/mm/dd)");
 
         txt_uid.setText("u_id");
 
@@ -148,6 +148,14 @@ public class addTransac extends javax.swing.JFrame {
 
         txt_date.setForeground(new java.awt.Color(153, 153, 153));
         txt_date.setText("yyyy/mm/dd");
+        txt_date.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_dateFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_dateFocusLost(evt);
+            }
+        });
         txt_date.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_dateActionPerformed(evt);
@@ -335,7 +343,7 @@ public class addTransac extends javax.swing.JFrame {
             String bType = combo_blood.getSelectedItem().toString();
             int qty = Integer.parseInt(txt_qty.getText());
             String date = txt_date.getText();
-            String status = "Approved";
+            String status = "Pending";
 
             // 2. The Transaction SQL
             String sql = "INSERT INTO tbl_donations (u_id, blood_type, quantity, d_date, status) VALUES (?, ?, ?, ?, ?)";
@@ -367,7 +375,7 @@ public class addTransac extends javax.swing.JFrame {
                 uv.setVisible(true);
 }
     private void remailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_remailFocusGained
-        if (remail.getText().equals("Email")) {
+        if (remail.getText().equals("Email/Phone")) {
             remail.setText("");
             remail.setForeground(new java.awt.Color(0, 0, 0));
         }
@@ -376,7 +384,7 @@ public class addTransac extends javax.swing.JFrame {
     private void remailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_remailFocusLost
         if (remail.getText().isEmpty()) {
             remail.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
-            remail.setText("Email");
+            remail.setText("Email/Phone");
         }
     }//GEN-LAST:event_remailFocusLost
 
@@ -409,6 +417,20 @@ public class addTransac extends javax.swing.JFrame {
     private void txt_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_dateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_dateActionPerformed
+
+    private void txt_dateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_dateFocusGained
+        if (txt_date.getText().equals("yyyy/mm/dd")) {
+            txt_date.setText("");
+            txt_date.setForeground(new java.awt.Color(0, 0, 0)); // Change text to black
+        }
+    }//GEN-LAST:event_txt_dateFocusGained
+
+    private void txt_dateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_dateFocusLost
+        if (txt_date.getText().isEmpty()) {
+            txt_date.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
+            txt_date.setText("yyyy/mm/dd");
+        }
+    }//GEN-LAST:event_txt_dateFocusLost
 
     /**
      * @param args the command line arguments
