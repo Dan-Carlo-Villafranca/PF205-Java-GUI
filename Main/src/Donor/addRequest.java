@@ -22,6 +22,11 @@ public class addRequest extends javax.swing.JFrame {
         initComponents();
         txt_uid.setText("ID Number: "+ config.Session.id);
         updateAvailableBloodTypes();
+        
+        // Set the text field to show today's date and disable typing
+        java.sql.Date today = new java.sql.Date(System.currentTimeMillis());
+        txt_date.setText(today.toString());
+        txt_date.setEditable(false);        
     }
 private void updateAvailableBloodTypes() {
     combo_blood.removeAllItems(); // Clear the hardcoded A, B, O list
@@ -141,6 +146,15 @@ private void updateAvailableBloodTypes() {
         jLabel5.setText("Blood Type");
 
         txt_qty.setForeground(new java.awt.Color(153, 153, 153));
+        txt_qty.setText("E.g. 10");
+        txt_qty.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_qtyFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_qtyFocusLost(evt);
+            }
+        });
         txt_qty.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_qtyActionPerformed(evt);
@@ -353,6 +367,9 @@ private void updateAvailableBloodTypes() {
             int qty = Integer.parseInt(txt_qty.getText());
             String date = txt_date.getText();
             String status = "Pending";
+            
+            // 3. GET SYSTEM DATE AUTOMATICALLY
+            java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());
 
             // 2. The Transaction SQL
             String sql = "INSERT INTO tbl_requests (u_id, blood_type, quantity, r_date, status) VALUES (?, ?, ?, ?, ?)";
@@ -412,11 +429,11 @@ private void updateAvailableBloodTypes() {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void txt_qtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_qtyActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txt_qtyActionPerformed
 
     private void txt_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_dateActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txt_dateActionPerformed
 
     private void txt_dateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_dateFocusGained
@@ -432,6 +449,20 @@ private void updateAvailableBloodTypes() {
             txt_date.setText("yyyy/mm/dd");
         }
     }//GEN-LAST:event_txt_dateFocusLost
+
+    private void txt_qtyFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_qtyFocusGained
+        if (txt_qty.getText().equals("E.g. 10")) {
+            txt_qty.setText("");
+            txt_qty.setForeground(new java.awt.Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txt_qtyFocusGained
+
+    private void txt_qtyFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_qtyFocusLost
+        if (txt_qty.getText().isEmpty()) {
+            txt_qty.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
+            txt_qty.setText("E.g. 10");
+        }
+    }//GEN-LAST:event_txt_qtyFocusLost
 
     /**
      * @param args the command line arguments

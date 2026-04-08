@@ -362,9 +362,8 @@ public class addUser extends javax.swing.JFrame {
         // String.valueOf(passwordfield.getPassword()) is the safe way to check the text
         if (String.valueOf(passwordfield1.getPassword()).equals("Password")) {
             passwordfield1.setText("");
-            passwordfield1.setEchoChar('•'); // Switch to dots
-            passwordfield1.setForeground(new java.awt.Color(0, 0, 0));
-        }
+            passwordfield1.setForeground(new java.awt.Color(0, 0, 0)); 
+    }
     }//GEN-LAST:event_passwordfield1FocusGained
 
     private void passwordfield1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfield1FocusLost
@@ -379,23 +378,6 @@ public class addUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordfield1ActionPerformed
 
-    private void passwordfield2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfield2FocusGained
-        // String.valueOf(passwordfield.getPassword()) is the safe way to check the text
-        if (String.valueOf(passwordfield2.getPassword()).equals("Confirm Password")) {
-            passwordfield2.setText("");
-            passwordfield2.setEchoChar('•'); // Switch to dots
-            passwordfield2.setForeground(new java.awt.Color(0, 0, 0));
-        }
-    }//GEN-LAST:event_passwordfield2FocusGained
-
-    private void passwordfield2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfield2FocusLost
-        if (passwordfield2.getPassword().length == 0) {
-            passwordfield2.setEchoChar((char) 0); // Remove dots so we can see the word
-            passwordfield2.setText("Confirm Password");
-            passwordfield2.setForeground(new java.awt.Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_passwordfield2FocusLost
-
     private void TypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TypeActionPerformed
@@ -409,6 +391,23 @@ public class addUser extends javax.swing.JFrame {
     private void StatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StatusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_StatusActionPerformed
+
+    private void passwordfield2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfield2FocusLost
+        if (passwordfield2.getPassword().length == 0) {
+            passwordfield2.setEchoChar((char) 0); // Remove dots so we can see the word
+            passwordfield2.setText("Confirm Password");
+            passwordfield2.setForeground(new java.awt.Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_passwordfield2FocusLost
+
+    private void passwordfield2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordfield2FocusGained
+        // String.valueOf(passwordfield.getPassword()) is the safe way to check the text
+        if (String.valueOf(passwordfield2.getPassword()).equals("Confirm Password")) {
+            passwordfield2.setText("");
+            passwordfield2.setEchoChar('•'); // Switch to dots
+            passwordfield2.setForeground(new java.awt.Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_passwordfield2FocusGained
 
     /**
      * @param args the command line arguments

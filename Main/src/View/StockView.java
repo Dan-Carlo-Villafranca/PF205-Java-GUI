@@ -23,7 +23,7 @@ public class StockView extends javax.swing.JFrame {
     void getStocksData() {
     config con = new config();
     // Simplified SQL to match your goal: just the ID, Blood Type, and Quantity
-    String sql = "SELECT b_id, blood_type, quantity FROM tbl_blood";
+    String sql = "SELECT b_id AS 'ID', blood_type AS 'Type', quantity AS 'Quantity' FROM tbl_blood";
     
     // Make sure your JTable in the Design tab is named 'stockTable'
     con.displayData(sql, stockTable);
@@ -57,7 +57,7 @@ public class StockView extends javax.swing.JFrame {
         users1 = new javax.swing.JLabel();
         HomeButton = new javax.swing.JPanel();
         home = new javax.swing.JLabel();
-        UserButton4 = new javax.swing.JPanel();
+        Reports = new javax.swing.JPanel();
         reports1 = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(jEditorPane1);
@@ -351,16 +351,16 @@ public class StockView extends javax.swing.JFrame {
 
         jLayeredPane1.add(HomeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 60, 30));
 
-        UserButton4.setBackground(new java.awt.Color(204, 0, 51));
-        UserButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+        Reports.setBackground(new java.awt.Color(204, 0, 51));
+        Reports.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                UserButton4MouseClicked(evt);
+                ReportsMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                UserButton4MouseEntered(evt);
+                ReportsMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                UserButton4MouseExited(evt);
+                ReportsMouseExited(evt);
             }
         });
 
@@ -369,21 +369,21 @@ public class StockView extends javax.swing.JFrame {
         reports1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         reports1.setText("Reports");
 
-        javax.swing.GroupLayout UserButton4Layout = new javax.swing.GroupLayout(UserButton4);
-        UserButton4.setLayout(UserButton4Layout);
-        UserButton4Layout.setHorizontalGroup(
-            UserButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UserButton4Layout.createSequentialGroup()
+        javax.swing.GroupLayout ReportsLayout = new javax.swing.GroupLayout(Reports);
+        Reports.setLayout(ReportsLayout);
+        ReportsLayout.setHorizontalGroup(
+            ReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ReportsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(reports1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        UserButton4Layout.setVerticalGroup(
-            UserButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        ReportsLayout.setVerticalGroup(
+            ReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(reports1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        jLayeredPane1.add(UserButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 60, 30));
+        jLayeredPane1.add(Reports, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 60, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -526,17 +526,19 @@ public class StockView extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_deleteActionPerformed
 
-    private void UserButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UserButton4MouseClicked
+    private void ReportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseClicked
+        RecordsView recview = new RecordsView();
+        recview.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ReportsMouseClicked
 
-    private void UserButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton4MouseEntered
-        UserButton4.setBackground(new java.awt.Color(255, 102, 102));
-    }//GEN-LAST:event_UserButton4MouseEntered
+    private void ReportsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseEntered
+        Reports.setBackground(new java.awt.Color(255, 102, 102));
+    }//GEN-LAST:event_ReportsMouseEntered
 
-    private void UserButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton4MouseExited
-        UserButton4.setBackground(new java.awt.Color(204,0,51));
-    }//GEN-LAST:event_UserButton4MouseExited
+    private void ReportsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseExited
+        Reports.setBackground(new java.awt.Color(204,0,51));
+    }//GEN-LAST:event_ReportsMouseExited
 
     private void UserButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton1MouseEntered
         UserButton1.setBackground(new java.awt.Color(255, 102, 102));
@@ -588,10 +590,10 @@ public class StockView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BG;
     private javax.swing.JPanel HomeButton;
+    private javax.swing.JPanel Reports;
     private javax.swing.JPanel Stocks;
     private javax.swing.JPanel UserButton1;
     private javax.swing.JPanel UserButton2;
-    private javax.swing.JPanel UserButton4;
     private javax.swing.JLabel acc_name1;
     private javax.swing.JLabel acc_type2;
     private javax.swing.JButton add;

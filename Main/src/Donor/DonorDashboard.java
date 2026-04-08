@@ -7,10 +7,12 @@ import javax.swing.*;
 import config.config;
 import Login.Login;
 import Users.UserView;
+//import static java.nio.file.Files.find;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+//import static jdk.nashorn.internal.objects.NativeString.search;
 import net.proteanit.sql.DbUtils;
 
 
@@ -39,10 +41,36 @@ public class DonorDashboard extends javax.swing.JFrame {
     
         void getMyDonationHistory() {
                 config con = new config();
-                // Correct SQL using the session ID to filter the table
-                String sql = "SELECT d_date, blood_type, quantity, status FROM tbl_donations WHERE u_id = '" + config.Session.id + "'";
+                String find = search.getText(); 
+                String sql;
+
+                // 1. Define the base queries with the Date formatting logic
+                // we divide by 1000 to convert milliseconds to seconds for SQLite
+                String donationSelect = "SELECT strftime('%Y-%m-%d', d_date / 1000, 'unixepoch') AS 'Date', " +
+                                        "'Donation' AS 'Type', blood_type AS 'Blood Type', " +
+                                        "quantity AS 'Quantity', status AS 'Status' " +
+                                        "FROM tbl_donations WHERE u_id = '" + config.Session.id + "' ";
+
+                String requestSelect = "SELECT strftime('%Y-%m-%d', r_date / 1000, 'unixepoch') AS 'Date', " +
+                                       "'Request' AS 'Type', blood_type AS 'Blood Type', " +
+                                       "quantity AS 'Quantity', status AS 'Status' " +
+                                       "FROM tbl_requests WHERE u_id = '" + config.Session.id + "' ";
+
+                // 2. Apply Search Logic or Default View
+                if (find.isEmpty() || find.equals("Search by Blood Type or ID...")) {
+                    // Show everything for the logged-in user
+                    sql = donationSelect + " UNION " + requestSelect + " ORDER BY Date DESC";
+                } else {
+                    // Filter both sides of the UNION so the search works for both requests and donations
+                    sql = donationSelect + " AND (blood_type LIKE '%" + find + "%' OR status LIKE '%" + find + "%' OR 'Donation' LIKE '%" + find + "%') " +
+                        " UNION " +
+                        requestSelect + " AND (blood_type LIKE '%" + find + "%' OR status LIKE '%" + find + "%' OR 'Request' LIKE '%" + find + "%') " +
+                        " ORDER BY Date DESC";
+                }
+
+                // 3. Send the clean SQL to your config's display method
                 con.displayData(sql, donorHistoryTable);
-            }
+}
         
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -67,10 +95,9 @@ public class DonorDashboard extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         Request = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        search = new javax.swing.JTextField();
         UserButton2 = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
-        UserButton = new javax.swing.JPanel();
-        reports = new javax.swing.JLabel();
         HomeButton = new javax.swing.JPanel();
         home = new javax.swing.JLabel();
 
@@ -132,7 +159,7 @@ public class DonorDashboard extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("DONOR DASHBOARD");
+        jLabel1.setText("Donor History");
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Profile Blank red.png"))); // NOI18N
@@ -153,15 +180,23 @@ public class DonorDashboard extends javax.swing.JFrame {
 
         donorHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Date", "Blood Type", "Quantity", "Status"
+                "Date", "Type", "Blood Type", "Quantity", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(donorHistoryTable);
 
         Donate.setBackground(new java.awt.Color(204, 0, 51));
@@ -234,6 +269,26 @@ public class DonorDashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        search.setText("Search by Blood Type or ID...");
+        search.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchFocusLost(evt);
+            }
+        });
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+        search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -243,6 +298,8 @@ public class DonorDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
@@ -283,7 +340,9 @@ public class DonorDashboard extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(Donate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(80, 80, 80))
@@ -341,43 +400,6 @@ public class DonorDashboard extends javax.swing.JFrame {
         );
 
         jLayeredPane1.add(UserButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 60, 30));
-
-        UserButton.setBackground(new java.awt.Color(204, 0, 51));
-        UserButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                UserButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                UserButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                UserButtonMouseExited(evt);
-            }
-        });
-
-        reports.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        reports.setForeground(new java.awt.Color(240, 240, 240));
-        reports.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        reports.setText("Reports");
-
-        javax.swing.GroupLayout UserButtonLayout = new javax.swing.GroupLayout(UserButton);
-        UserButton.setLayout(UserButtonLayout);
-        UserButtonLayout.setHorizontalGroup(
-            UserButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UserButtonLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(reports, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        UserButtonLayout.setVerticalGroup(
-            UserButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UserButtonLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(reports)
-                .addContainerGap())
-        );
-
-        jLayeredPane1.add(UserButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 60, 30));
 
         HomeButton.setBackground(new java.awt.Color(204, 0, 51));
         HomeButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -456,21 +478,9 @@ public class DonorDashboard extends javax.swing.JFrame {
         HomeButton.setBackground(new java.awt.Color(255, 102, 102));
     }//GEN-LAST:event_HomeButtonMouseEntered
 
-    private void UserButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButtonMouseClicked
-        //        new Users().setVisible(true);
-    }//GEN-LAST:event_UserButtonMouseClicked
-
     private void HomeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeButtonMouseExited
         HomeButton.setBackground(new java.awt.Color(204,0,51));
     }//GEN-LAST:event_HomeButtonMouseExited
-
-    private void UserButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButtonMouseEntered
-        UserButton.setBackground(new java.awt.Color(255, 102, 102));
-    }//GEN-LAST:event_UserButtonMouseEntered
-
-    private void UserButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButtonMouseExited
-        UserButton.setBackground(new java.awt.Color(204,0,51));
-    }//GEN-LAST:event_UserButtonMouseExited
 
     private void UserButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton2MouseEntered
         UserButton2.setBackground(new java.awt.Color(255, 102, 102));
@@ -507,6 +517,28 @@ public class DonorDashboard extends javax.swing.JFrame {
     private void RequestMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RequestMouseExited
         Request.setBackground(new java.awt.Color(204,0,51));
     }//GEN-LAST:event_RequestMouseExited
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
+        getMyDonationHistory();
+    }//GEN-LAST:event_searchKeyReleased
+
+    private void searchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFocusGained
+        if (search.getText().equals("Search by Blood Type or ID...")) {
+            search.setText("");
+            search.setForeground(new java.awt.Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_searchFocusGained
+
+    private void searchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFocusLost
+        if (search.getText().isEmpty()) {
+            search.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
+            search.setText("Search by Blood Type or ID...");
+        }
+    }//GEN-LAST:event_searchFocusLost
     
     /**
      * @param args the command line arguments
@@ -552,7 +584,6 @@ public class DonorDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Donate;
     private javax.swing.JPanel HomeButton;
     private javax.swing.JPanel Request;
-    private javax.swing.JPanel UserButton;
     private javax.swing.JPanel UserButton2;
     private javax.swing.JLabel acc_email;
     private javax.swing.JLabel acc_name1;
@@ -570,7 +601,7 @@ public class DonorDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel logout;
-    private javax.swing.JLabel reports;
+    private javax.swing.JTextField search;
     private javax.swing.JPanel upPanel;
     // End of variables declaration//GEN-END:variables
 }

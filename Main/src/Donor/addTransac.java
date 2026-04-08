@@ -20,6 +20,11 @@ public class addTransac extends javax.swing.JFrame {
     public addTransac() {
         initComponents();
         txt_uid.setText("ID Number: "+ config.Session.id);
+        
+        // Set the text field to show today's date and disable typing
+        java.sql.Date today = new java.sql.Date(System.currentTimeMillis());
+        txt_date.setText(today.toString());
+        txt_date.setEditable(false);
     }
 
     /**
@@ -124,6 +129,7 @@ public class addTransac extends javax.swing.JFrame {
         jLabel5.setText("Blood Type");
 
         txt_qty.setForeground(new java.awt.Color(153, 153, 153));
+        txt_qty.setText("E.g. 10");
         txt_qty.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txt_qtyFocusGained(evt);
@@ -344,6 +350,9 @@ public class addTransac extends javax.swing.JFrame {
             int qty = Integer.parseInt(txt_qty.getText());
             String date = txt_date.getText();
             String status = "Pending";
+            
+            // 3. GET SYSTEM DATE AUTOMATICALLY
+            java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());
 
             // 2. The Transaction SQL
             String sql = "INSERT INTO tbl_donations (u_id, blood_type, quantity, d_date, status) VALUES (?, ?, ?, ?, ?)";
@@ -354,7 +363,7 @@ public class addTransac extends javax.swing.JFrame {
                 pstmt.setInt(1, donorID);   // Links to tbl_accounts.u_id
                 pstmt.setString(2, bType);  // e.g., "O+"
                 pstmt.setInt(3, qty);      // e.g., 150
-                pstmt.setString(4, date);   // e.g., "2026-02-24"
+                pstmt.setDate(4, currentDate);   // e.g., "2026-02-24"
                 pstmt.setString(5, status); // e.g., "Approved"
 
                 pstmt.executeUpdate();
@@ -403,11 +412,17 @@ public class addTransac extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void txt_qtyFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_qtyFocusGained
-        // TODO add your handling code here:
+        if (txt_qty.getText().equals("E.g. 10")) {
+            txt_qty.setText("");
+            txt_qty.setForeground(new java.awt.Color(0, 0, 0));
+        }
     }//GEN-LAST:event_txt_qtyFocusGained
 
     private void txt_qtyFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_qtyFocusLost
-        // TODO add your handling code here:
+        if (txt_qty.getText().isEmpty()) {
+            txt_qty.setForeground(new java.awt.Color(153, 153, 153)); // Change back to gray
+            txt_qty.setText("E.g. 10");
+        }
     }//GEN-LAST:event_txt_qtyFocusLost
 
     private void txt_qtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_qtyActionPerformed

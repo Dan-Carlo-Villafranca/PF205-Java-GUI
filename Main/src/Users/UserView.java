@@ -6,8 +6,10 @@ import pages.landingForm;
 import javax.swing.*;
 import config.config;
 import Login.Login;
+import View.RecordsView;
 import View.StockView;
 import javax.swing.table.TableModel;
+import net.proteanit.sql.DbUtils;
 
 
 
@@ -22,31 +24,32 @@ public class UserView extends javax.swing.JFrame {
     
     void getUsersData(){
         config con = new config();
-        String sql = "SELECT u_id, full_name, email, type, status FROM tbl_accounts";
-        con.displayData(sql, userTable);
+        String sql = "SELECT u_id AS 'ID', full_name AS 'Full Name', email AS 'Email', type AS 'Type', status AS 'Status' FROM tbl_accounts";
+        con.displayData(sql, ReportsTable);
     }
     
     // --- ADDED SEARCH FILTER METHOD ---
     public void searchFilter() {
-        config con = new config();
-        String find = search.getText();
-        
-        // If search is empty or placeholder, show all data
-        if (find.isEmpty() || find.equals("Search")) {
-            getUsersData();
-            return;
-        }
+            config con = new config();
+            String find = search.getText();
 
-        String sql = "SELECT u_id, full_name, email, type, status FROM tbl_accounts "
-                   + "WHERE u_id LIKE '%" + find + "%' "
-                   + "OR full_name LIKE '%" + find + "%' "
-                   + "OR email LIKE '%" + find + "%' "
-                   + "OR type LIKE '%" + find + "%' "
-                   + "OR status LIKE '%" + find + "%'";
+            // Updated to check for empty OR your specific placeholder text
+            if (find.isEmpty() || find.equals("Search") || find.equals("Search by Blood Type or ID...")) {
+                getUsersData(); 
+                return;
+            }
 
-        con.displayData(sql, userTable);
-    }
+            // Keep these labels identical to the ones in getUsersData()
+            String sql = "SELECT u_id AS 'ID', full_name AS 'Full Name', email AS 'Email', " +
+                         "type AS 'Type', status AS 'Status' FROM tbl_accounts "
+                       + "WHERE (u_id LIKE '%" + find + "%' "
+                       + "OR full_name LIKE '%" + find + "%' "
+                       + "OR email LIKE '%" + find + "%' "
+                       + "OR type LIKE '%" + find + "%' "
+                       + "OR status LIKE '%" + find + "%')";
 
+            con.displayData(sql, ReportsTable);
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -65,14 +68,14 @@ public class UserView extends javax.swing.JFrame {
         acc_name1 = new javax.swing.JLabel();
         acc_type2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        userTable = new javax.swing.JTable();
+        ReportsTable = new javax.swing.JTable();
         add = new javax.swing.JButton();
         update = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         search = new javax.swing.JTextField();
         UserButton2 = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
-        UserButton = new javax.swing.JPanel();
+        Reports = new javax.swing.JPanel();
         reports = new javax.swing.JLabel();
         UserButton1 = new javax.swing.JPanel();
         users1 = new javax.swing.JLabel();
@@ -149,7 +152,7 @@ public class UserView extends javax.swing.JFrame {
         acc_type2.setForeground(new java.awt.Color(204, 0, 0));
         acc_type2.setText("jLabel2");
 
-        userTable.setModel(new javax.swing.table.DefaultTableModel(
+        ReportsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -160,11 +163,11 @@ public class UserView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(userTable);
-        if (userTable.getColumnModel().getColumnCount() > 0) {
-            userTable.getColumnModel().getColumn(0).setResizable(false);
-            userTable.getColumnModel().getColumn(1).setResizable(false);
-            userTable.getColumnModel().getColumn(2).setResizable(false);
+        jScrollPane2.setViewportView(ReportsTable);
+        if (ReportsTable.getColumnModel().getColumnCount() > 0) {
+            ReportsTable.getColumnModel().getColumn(0).setResizable(false);
+            ReportsTable.getColumnModel().getColumn(1).setResizable(false);
+            ReportsTable.getColumnModel().getColumn(2).setResizable(false);
         }
 
         add.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
@@ -236,7 +239,7 @@ public class UserView extends javax.swing.JFrame {
                                 .addComponent(delete)
                                 .addGap(18, 18, 18)
                                 .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -320,16 +323,16 @@ public class UserView extends javax.swing.JFrame {
 
         jLayeredPane1.add(UserButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 60, 30));
 
-        UserButton.setBackground(new java.awt.Color(204, 0, 51));
-        UserButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        Reports.setBackground(new java.awt.Color(204, 0, 51));
+        Reports.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                UserButtonMouseClicked(evt);
+                ReportsMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                UserButtonMouseEntered(evt);
+                ReportsMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                UserButtonMouseExited(evt);
+                ReportsMouseExited(evt);
             }
         });
 
@@ -338,21 +341,21 @@ public class UserView extends javax.swing.JFrame {
         reports.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         reports.setText("Reports");
 
-        javax.swing.GroupLayout UserButtonLayout = new javax.swing.GroupLayout(UserButton);
-        UserButton.setLayout(UserButtonLayout);
-        UserButtonLayout.setHorizontalGroup(
-            UserButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UserButtonLayout.createSequentialGroup()
+        javax.swing.GroupLayout ReportsLayout = new javax.swing.GroupLayout(Reports);
+        Reports.setLayout(ReportsLayout);
+        ReportsLayout.setHorizontalGroup(
+            ReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ReportsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(reports, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        UserButtonLayout.setVerticalGroup(
-            UserButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        ReportsLayout.setVerticalGroup(
+            ReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(reports, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        jLayeredPane1.add(UserButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 60, 30));
+        jLayeredPane1.add(Reports, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 60, 30));
 
         UserButton1.setBackground(new java.awt.Color(255, 102, 102));
         UserButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -479,9 +482,11 @@ public class UserView extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_HomeButtonMouseClicked
 
-    private void UserButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButtonMouseClicked
-//        new Users().setVisible(true);
-    }//GEN-LAST:event_UserButtonMouseClicked
+    private void ReportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseClicked
+        RecordsView recview = new RecordsView();
+        recview.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ReportsMouseClicked
 
     private void UserButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton1MouseClicked
         // TODO add your handling code here:
@@ -507,13 +512,13 @@ public class UserView extends javax.swing.JFrame {
         HomeButton.setBackground(new java.awt.Color(204,0,51));
     }//GEN-LAST:event_HomeButtonMouseExited
 
-    private void UserButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButtonMouseEntered
-        UserButton.setBackground(new java.awt.Color(255, 102, 102));
-    }//GEN-LAST:event_UserButtonMouseEntered
+    private void ReportsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseEntered
+        Reports.setBackground(new java.awt.Color(255, 102, 102));
+    }//GEN-LAST:event_ReportsMouseEntered
 
-    private void UserButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButtonMouseExited
-        UserButton.setBackground(new java.awt.Color(204,0,51));
-    }//GEN-LAST:event_UserButtonMouseExited
+    private void ReportsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseExited
+        Reports.setBackground(new java.awt.Color(204,0,51));
+    }//GEN-LAST:event_ReportsMouseExited
 
     private void UserButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton2MouseEntered
         UserButton2.setBackground(new java.awt.Color(255, 102, 102));
@@ -532,7 +537,7 @@ public class UserView extends javax.swing.JFrame {
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // 1. Check if a row is actually selected
-        int rowIndex = userTable.getSelectedRow();
+        int rowIndex = ReportsTable.getSelectedRow();
 
         if (rowIndex < 0) {
             JOptionPane.showMessageDialog(null, "Please select an account to update!");
@@ -540,7 +545,7 @@ public class UserView extends javax.swing.JFrame {
         }
 
         // 2. Access the table model to get data
-        javax.swing.table.TableModel model = userTable.getModel();
+        javax.swing.table.TableModel model = ReportsTable.getModel();
 
         // 3. Create the instance of the addUser form
         addUser au = new addUser(); 
@@ -564,7 +569,7 @@ public class UserView extends javax.swing.JFrame {
     }//GEN-LAST:event_updateActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        int rowIndex = userTable.getSelectedRow();
+        int rowIndex = ReportsTable.getSelectedRow();
 
             if (rowIndex < 0) {
                 JOptionPane.showMessageDialog(null, "Please select a user to delete!");
@@ -572,7 +577,7 @@ public class UserView extends javax.swing.JFrame {
             }
 
             // 1. Get the ID of the selected user
-            TableModel model = userTable.getModel();
+            TableModel model = ReportsTable.getModel();
             Object id = model.getValueAt(rowIndex, 0);
             String name = model.getValueAt(rowIndex, 1).toString();
 
@@ -671,8 +676,9 @@ public class UserView extends javax.swing.JFrame {
     private javax.swing.JPanel BG;
     private javax.swing.JPanel BlockPane3;
     private javax.swing.JPanel HomeButton;
+    private javax.swing.JPanel Reports;
+    private javax.swing.JTable ReportsTable;
     private javax.swing.JPanel Stocks;
-    private javax.swing.JPanel UserButton;
     private javax.swing.JPanel UserButton1;
     private javax.swing.JPanel UserButton2;
     private javax.swing.JLabel acc_name1;
@@ -693,7 +699,6 @@ public class UserView extends javax.swing.JFrame {
     private javax.swing.JTextField search;
     private javax.swing.JPanel upPanel;
     private javax.swing.JButton update;
-    private javax.swing.JTable userTable;
     private javax.swing.JLabel users1;
     private javax.swing.JLabel users2;
     // End of variables declaration//GEN-END:variables

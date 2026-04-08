@@ -6,6 +6,8 @@ import javax.swing.*;
 import config.config;
 import Login.Login;
 import Users.UserView;
+import View.DonationView;
+import View.RecordsView;
 import View.RequestView;
 import View.StockView;
 
@@ -28,6 +30,8 @@ public class AdminDashboard extends javax.swing.JFrame {
 //        }
 
         updateRequestValue();
+        updateDonationValue();
+        updateWarningStatus();
 
     }
 public void updateRequestValue() {
@@ -50,6 +54,85 @@ public void updateRequestValue() {
         System.out.println("Error updating request_value: " + e.getMessage());
     }
 }
+
+public void updateDonationValue() {
+    config con = new config();
+    String sql = "SELECT COUNT(*) FROM tbl_donations";
+
+    try (java.sql.Connection conn = con.connectDB();
+         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql);
+         java.sql.ResultSet rs = pstmt.executeQuery()) {
+
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            // Updates the label for donations
+            donations_value.setText(String.valueOf(count)); 
+        }
+
+    } catch (java.sql.SQLException e) {
+        System.out.println("Error updating donations_value: " + e.getMessage());
+    }
+}
+
+public void updateWarningStatus() {
+    config con = new config();
+    String countSql = "SELECT COUNT(*) FROM tbl_blood";
+    // Modified to select BOTH type and quantity
+    String lowSql = "SELECT blood_type, quantity FROM tbl_blood WHERE quantity < 5";
+
+    try (java.sql.Connection conn = con.connectDB();
+         java.sql.PreparedStatement pstmtCount = conn.prepareStatement(countSql);
+         java.sql.ResultSet rsCount = pstmtCount.executeQuery()) {
+
+        if (rsCount.next() && rsCount.getInt(1) == 0) {
+            warningLabel.setText("No Inventory Recorded");
+            warningLabel.setForeground(new java.awt.Color(200, 200, 200)); 
+            return;
+        }
+
+        try (java.sql.PreparedStatement pstmtLow = conn.prepareStatement(lowSql);
+             java.sql.ResultSet rsLow = pstmtLow.executeQuery()) {
+
+            java.util.List<String> emptyTypes = new java.util.ArrayList<>();
+            java.util.List<String> lowTypes = new java.util.ArrayList<>();
+
+            while (rsLow.next()) {
+                String type = rsLow.getString("blood_type");
+                int qty = rsLow.getInt("quantity");
+                
+                if (qty <= 0) {
+                    emptyTypes.add(type);
+                } else {
+                    lowTypes.add(type);
+                }
+            }
+
+            if (emptyTypes.isEmpty() && lowTypes.isEmpty()) {
+                warningLabel.setText("All stocks sufficient");
+                warningLabel.setForeground(new java.awt.Color(144, 238, 144)); // Light Green
+            } else if (!emptyTypes.isEmpty()) {
+                // PRIORITIZE EMPTY: Show types that are at 0
+                String joinedEmpty = String.join(", ", emptyTypes);
+                warningLabel.setText("‼ EMPTY: " + joinedEmpty);
+                warningLabel.setForeground(java.awt.Color.WHITE); // High contrast for danger
+            } else {
+                // SHOW LOW: Only if nothing is at 0
+                String joinedLow = String.join(", ", lowTypes);
+                if (joinedLow.length() > 15) {
+                    warningLabel.setText("Multiple types low!");
+                } else {
+                    warningLabel.setText("Low: " + joinedLow);
+                }
+                warningLabel.setForeground(java.awt.Color.YELLOW); 
+            }
+        }
+
+    } catch (java.sql.SQLException e) {
+        System.out.println("Error updating warningLabel: " + e.getMessage());
+        warningLabel.setText("Error loading data");
+    }
+}
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -69,7 +152,7 @@ public void updateRequestValue() {
         acc_email = new javax.swing.JLabel();
         total_stock = new javax.swing.JPanel();
         stocks_txt = new javax.swing.JLabel();
-        stock_value = new javax.swing.JLabel();
+        warningLabel = new javax.swing.JLabel();
         blood_request = new javax.swing.JPanel();
         requests_txt = new javax.swing.JLabel();
         request_value = new javax.swing.JLabel();
@@ -78,7 +161,7 @@ public void updateRequestValue() {
         donations_value = new javax.swing.JLabel();
         UserButton2 = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
-        UserButton = new javax.swing.JPanel();
+        Reports = new javax.swing.JPanel();
         reports = new javax.swing.JLabel();
         UserButton1 = new javax.swing.JPanel();
         users1 = new javax.swing.JLabel();
@@ -185,10 +268,10 @@ public void updateRequestValue() {
         stocks_txt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         stocks_txt.setText("Stocks");
 
-        stock_value.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        stock_value.setForeground(new java.awt.Color(255, 255, 255));
-        stock_value.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        stock_value.setText("Click to view more");
+        warningLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        warningLabel.setForeground(new java.awt.Color(255, 255, 255));
+        warningLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        warningLabel.setText("jlabel");
 
         javax.swing.GroupLayout total_stockLayout = new javax.swing.GroupLayout(total_stock);
         total_stock.setLayout(total_stockLayout);
@@ -200,7 +283,7 @@ public void updateRequestValue() {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, total_stockLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(stock_value, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                .addComponent(warningLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
                 .addContainerGap())
         );
         total_stockLayout.setVerticalGroup(
@@ -209,8 +292,8 @@ public void updateRequestValue() {
                 .addGap(24, 24, 24)
                 .addComponent(stocks_txt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(stock_value)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addComponent(warningLabel)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jPanel1.add(total_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 190, 100));
@@ -262,6 +345,9 @@ public void updateRequestValue() {
 
         donations.setBackground(new java.awt.Color(255, 51, 51));
         donations.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                donationsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 donationsMouseEntered(evt);
             }
@@ -355,36 +441,51 @@ public void updateRequestValue() {
 
         jLayeredPane1.add(UserButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 60, 30));
 
-        UserButton.setBackground(new java.awt.Color(204, 0, 51));
-        UserButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        Reports.setBackground(new java.awt.Color(204, 0, 51));
+        Reports.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                UserButtonMouseClicked(evt);
+                ReportsMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                UserButtonMouseEntered(evt);
+                ReportsMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                UserButtonMouseExited(evt);
+                ReportsMouseExited(evt);
             }
         });
 
+        reports.setBackground(new java.awt.Color(255, 102, 102));
         reports.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         reports.setForeground(new java.awt.Color(240, 240, 240));
         reports.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         reports.setText("Reports");
+        reports.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reportsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reportsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                reportsMouseExited(evt);
+            }
+        });
 
-        javax.swing.GroupLayout UserButtonLayout = new javax.swing.GroupLayout(UserButton);
-        UserButton.setLayout(UserButtonLayout);
-        UserButtonLayout.setHorizontalGroup(
-            UserButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(reports, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+        javax.swing.GroupLayout ReportsLayout = new javax.swing.GroupLayout(Reports);
+        Reports.setLayout(ReportsLayout);
+        ReportsLayout.setHorizontalGroup(
+            ReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ReportsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(reports)
+                .addContainerGap())
         );
-        UserButtonLayout.setVerticalGroup(
-            UserButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        ReportsLayout.setVerticalGroup(
+            ReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(reports, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        jLayeredPane1.add(UserButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 60, 30));
+        jLayeredPane1.add(Reports, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 60, 30));
 
         UserButton1.setBackground(new java.awt.Color(204, 0, 51));
         UserButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -424,6 +525,9 @@ public void updateRequestValue() {
         HomeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 HomeButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                HomeButtonMouseEntered(evt);
             }
         });
 
@@ -509,9 +613,11 @@ public void updateRequestValue() {
         JOptionPane.showMessageDialog(this, "You are already on the Home Dashboard.");
     }//GEN-LAST:event_HomeButtonMouseClicked
 
-    private void UserButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButtonMouseClicked
-//        new Users().setVisible(true);
-    }//GEN-LAST:event_UserButtonMouseClicked
+    private void ReportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseClicked
+        RecordsView recview = new RecordsView();
+        recview.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ReportsMouseClicked
 
     private void UserButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton1MouseClicked
         UserView uview = new UserView();
@@ -540,13 +646,13 @@ public void updateRequestValue() {
         UserButton1.setBackground(new java.awt.Color(204,0,51));
     }//GEN-LAST:event_UserButton1MouseExited
 
-    private void UserButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButtonMouseEntered
-        UserButton.setBackground(new java.awt.Color(255, 102, 102)); 
-    }//GEN-LAST:event_UserButtonMouseEntered
+    private void ReportsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseEntered
+        Reports.setBackground(new java.awt.Color(255, 102, 102)); 
+    }//GEN-LAST:event_ReportsMouseEntered
 
-    private void UserButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButtonMouseExited
-        UserButton.setBackground(new java.awt.Color(204,0,51));
-    }//GEN-LAST:event_UserButtonMouseExited
+    private void ReportsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseExited
+        Reports.setBackground(new java.awt.Color(204,0,51));
+    }//GEN-LAST:event_ReportsMouseExited
 
     private void UserButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserButton2MouseEntered
         UserButton2.setBackground(new java.awt.Color(255, 102, 102)); 
@@ -600,6 +706,30 @@ public void updateRequestValue() {
         rview.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_blood_requestMouseClicked
+
+    private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
+        RecordsView recview = new RecordsView();
+        recview.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_reportsMouseClicked
+
+    private void HomeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeButtonMouseEntered
+        HomeButton.setBackground(new java.awt.Color(255, 102, 102));
+    }//GEN-LAST:event_HomeButtonMouseEntered
+
+    private void reportsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseEntered
+        reports.setBackground(new java.awt.Color(255,51,51));
+    }//GEN-LAST:event_reportsMouseEntered
+
+    private void reportsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseExited
+        reports.setBackground(new java.awt.Color(255,51,51));
+    }//GEN-LAST:event_reportsMouseExited
+
+    private void donationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_donationsMouseClicked
+        DonationView dview = new DonationView();
+        dview.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_donationsMouseClicked
     
     /**
      * @param args the command line arguments
@@ -645,8 +775,8 @@ public void updateRequestValue() {
     private javax.swing.JPanel BlockPane3;
     private javax.swing.JLabel Donations_txt;
     private javax.swing.JPanel HomeButton;
+    private javax.swing.JPanel Reports;
     private javax.swing.JPanel Stocks;
-    private javax.swing.JPanel UserButton;
     private javax.swing.JPanel UserButton1;
     private javax.swing.JPanel UserButton2;
     private javax.swing.JLabel acc_email;
@@ -668,10 +798,10 @@ public void updateRequestValue() {
     private javax.swing.JLabel reports1;
     private javax.swing.JLabel request_value;
     private javax.swing.JLabel requests_txt;
-    private javax.swing.JLabel stock_value;
     private javax.swing.JLabel stocks_txt;
     private javax.swing.JPanel total_stock;
     private javax.swing.JPanel upPanel;
     private javax.swing.JLabel users1;
+    private javax.swing.JLabel warningLabel;
     // End of variables declaration//GEN-END:variables
 }
